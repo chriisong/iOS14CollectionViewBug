@@ -8,13 +8,15 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    
     var ncButton: UIButton!
     var vcButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureButtons()
+        self.title = "iOS 14"
     }
     
     func configureButtons() {

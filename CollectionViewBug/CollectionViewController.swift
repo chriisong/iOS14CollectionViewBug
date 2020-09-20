@@ -23,15 +23,18 @@ class CollectionViewBugVC: UIViewController {
     func configureHierarchy() {
         view.backgroundColor = .systemBackground
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: CompositionalLayout.createLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .systemBackground
+        
+        /// FIX TO THIS ISSUE IS THE AUTOLAYOUT CONSTRAINT. REMOVING THE CONSTRAINTS AND USING `collectionview.autoresizingMask` SOLVED IT. 🎉
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
-        ])
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+//            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+//            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
+//        ])
         collectionView.register(CollectionViewBugCell.self, forCellWithReuseIdentifier: CollectionViewBugCell.reuseIdentifier)
     }
     func configureNavigationItem() {
@@ -85,7 +88,7 @@ class CompositionalLayout {
 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20)
         section.interGroupSpacing = 15
         
         let layout = UICollectionViewCompositionalLayout(section: section)
